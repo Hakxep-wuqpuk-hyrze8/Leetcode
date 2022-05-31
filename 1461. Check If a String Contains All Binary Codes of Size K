@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool hasAllCodes(string s, int n) {
+        int l=s.length();
+        if (l<=n) return false;
+        
+        set<int> st;
+        
+        int idx=0, N=0;
+        for (int i=l-1; i>=l-n; i--) {
+            idx += (s[i]-'0')*pow(2, N);
+            N++;
+        }
+        st.insert(idx);
+        for (int i=l-n-1; i>=0; i--) {
+            idx -= (s[i+n]-'0');
+            idx >>= 1;
+            idx += (s[i]-'0')*pow(2, n-1);
+            st.insert(idx);
+        }
+        
+        if (st.size() == pow(2, n)) 
+            return true;
+        return false;
+    }
+};
